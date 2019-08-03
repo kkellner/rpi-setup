@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -xv
 #
 # Configure a new Raspberry PI
 # which has Raspbian Buster Lite
@@ -23,7 +23,7 @@ fi
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
-sudo apt-get install python3-pip
+sudo apt-get install -y python3-pip
 
 # Configuring I2C
 sudo apt-get install -y python-smbus
@@ -32,15 +32,15 @@ sudo apt-get install -y i2c-tools
 # TODO: configure i2c via command-line
 # sudo raspi-config 
 
-sudo apt-get install python3-rpi.gpio
+sudo apt-get install -y python3-rpi.gpio
 
 sudo pip3 install -y RPI.GPIO
 sudo pip3 install -y adafruit-blinka
 sudo pip3 install -y adafruit-circuitpython-neopixel
-sudo pip3 install pyyaml
-sudo pip3 install schedule
-sudo pip3 install melopero-vl53l1x
-sudo pip3 install psutil
+sudo pip3 install -y pyyaml
+sudo pip3 install -y schedule
+sudo pip3 install -y melopero-vl53l1x
+sudo pip3 install -y psutil
 
 
 # Add w1thermsensor command.
