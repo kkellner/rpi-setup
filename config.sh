@@ -6,12 +6,12 @@
 # To run this config script, install git, clone repo and run script.
 # Commands:
 #
+# ssh-keygen -R raspberrypi.local
 # ssh -o "StrictHostKeyChecking no" pi@raspberrypi.local
 # Default Password: raspberry
 # sudo apt-get install -y git
 # git clone https://github.com/kkellner/rpi-setup.git
-# cd rpi-setup
-# ./config.sh
+# cd rpi-setup; ./config.sh NEW_HOSTNAME
 
 configFile=/boot/config.txt
 
@@ -157,7 +157,7 @@ fi
 bashrcFile=/etc/bash.bashrc
 grep -Eq "alias ro" ${bashrcFile}
 if [[ $? != 0 ]]; then
-sudo cat <<EOT | sudo tee -a ${bashrcFile} > /dev/null
+sudo cat <<'EOT' | sudo tee -a /etc/bash.bashrc > /dev/null
 # set variable identifying the filesystem you work in (used in the prompt below)
 set_bash_prompt(){
     fs_mode=$(mount | sed -n -e "s/^\/dev\/.* on \/ .*(\(r[w|o]\).*/\1/p")
