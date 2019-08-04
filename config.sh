@@ -136,12 +136,13 @@ fi
 sudo swapoff --all
 sudo dphys-swapfile swapoff
 sudo dphys-swapfile uninstall
+sudo systemctl disable dphys-swapfile.service
 sudo update-rc.d dphys-swapfile remove
 
 fstabFile=/etc/fstab
 
-sudo sed -i -e 's/vfat    defaults /vfat    defaults,noatime,commit=60,ro /g' ${fstabFile}
-sudo sed -i -e 's/ext4    defaults,noatime /ext4    defaults,noatime,commit=60,ro /g' ${fstabFile}
+sudo sed -i -e 's/vfat    defaults /vfat    defaults,noatime,ro /g' ${fstabFile}
+sudo sed -i -e 's/ext4    defaults,noatime /ext4    defaults,noatime,ro /g' ${fstabFile}
 
 grep -Eq "tmpfs" ${fstabFile}
 if [[ $? != 0 ]]; then
