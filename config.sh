@@ -13,14 +13,29 @@
 # git clone https://github.com/kkellner/rpi-setup.git
 # cd rpi-setup; ./config.sh NEW_HOSTNAME
 
+usage()
+{
+     echo "usage: config.sh --hostname hostname  --password pi-user-password"
+}
+
+
+while [ "$1" != "" ]; do
+    case $1 in
+        -n | --hostname )       shift
+                                hostname=$1
+                                ;;
+        -p | --password )       password=$1
+                                ;;
+        -h | --help )           usage
+                                exit
+                                ;;
+        * )                     usage
+                                exit 1
+    esac
+    shift
+done
+
 configFile=/boot/config.txt
-
-hostname=$1
-
-if [ -z "${hostname}" ]; then
-   echo "Hostname arg required"
-   exit 1
-fi
 
 sudo apt-get update -y
 sudo apt-get upgrade -y
@@ -112,6 +127,19 @@ fi
 
 
 #####################################################
+# Disable bluetooth
+grep -Eq "^dtoverlay=pi3-disable-bt" ${configFile}
+if [[ $? != 0 ]]; then
+    echo "# Disable Bluetooth" | sudo tee -a ${configFile} > /dev/null 
+    echo "dtoverlay=pi3-disable-bt" | sudo tee -a ${configFile} > /dev/null 
+fi
+
+sudo systemctl disable hciuart.service
+sudo systemctl disable bluetooth.service
+
+
+
+#####################################################
 # Disable IPV6
 ipv6File=/etc/modprobe.d/ipv6.conf
 if [ ! -f ${ipv6File} ]; then
@@ -172,6 +200,14 @@ alias rw='sudo mount -o remount,rw / ; sudo mount -o remount,rw /boot'
 PROMPT_COMMAND=set_bash_prompt
 EOT
 fi
+
+
+#####################################################
+# Change log rotation values
+rsyslogFile=/etc/logrotate.d/rsyslog
+sudo sed -i -e 's/rotate 7/rotate 4/g' ${rsyslogFile}
+sudo sed -i -e 's/weekly/daily/g' ${rsyslogFile}
+
 
 
 #####################################################
