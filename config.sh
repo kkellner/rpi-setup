@@ -24,7 +24,8 @@ while [ "$1" != "" ]; do
         -n | --hostname )       shift
                                 hostname=$1
                                 ;;
-        -p | --password )       password=$1
+        -p | --password )       shift
+                                password=$1
                                 ;;
         -h | --help )           usage
                                 exit
@@ -34,6 +35,19 @@ while [ "$1" != "" ]; do
     esac
     shift
 done
+
+
+if [ -z "${hostname}" ]; then
+   echo "--hostname arg required"
+   exit 1
+fi
+
+if [ -z "${password}" ]; then
+   echo "--password arg required"
+   exit 1
+fi
+
+echo -e "${password}\n${password}\n" | sudo passwd pi
 
 configFile=/boot/config.txt
 
