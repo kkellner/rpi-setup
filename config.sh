@@ -105,8 +105,15 @@ sudo raspi-config nonint do_i2c 0
 #sudo raspi-config nonint do_memory_split %d
 
 
-rclocalFile=/etc/rc.local
+#####################################################
+# Set timezone
+sudo rm /etc/localtime
+sudo ln -s /usr/share/zoneinfo/America/Denver /etc/localtime
+sudo rm /etc/timezone
+echo "America/Denver" | sudo tee /etc/timezone > /dev/null 
 
+
+rclocalFile=/etc/rc.local
 #####################################################
 # Turn off HDMI
 grep -Eq "^/usr/bin/tvservice -o" ${rclocalFile}
