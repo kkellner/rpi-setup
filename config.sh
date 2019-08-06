@@ -11,7 +11,7 @@
 # Default Password: raspberry
 # sudo apt-get install -y git
 # git clone https://github.com/kkellner/rpi-setup.git
-# cd rpi-setup; ./config.sh NEW_HOSTNAME
+# cd rpi-setup; ./config.sh --hostname new-hostname --password pi-user-password
 
 usage()
 {
