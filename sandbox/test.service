@@ -17,8 +17,8 @@ WorkingDirectory=/home/pi/rpi-setup/sandbox
 # The following "file:" option requires systemd version 236 or newer 
 # 2019-04-08-raspbian-stretch-lite has version 232
 # To show version run: systemctl --version
-StandardOutput=file:/var/log/test.log
-StandardError=file:/var/log/test.log
+StandardOutput=append:/var/log/test.log
+StandardError=append:/var/log/test.log
 Restart=always
 User=root
 
