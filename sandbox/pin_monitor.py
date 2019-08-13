@@ -18,6 +18,7 @@ logging.basicConfig(level=logging.NOTSET, format=FORMAT)
 GPIO.setmode(GPIO.BOARD)
 
 BTN_G = 11 # G17
+#BTN_G = 13 # G27
 
 GPIO.setwarnings(True) # because I'm using the pins for other things too!
 GPIO.setup([BTN_G], GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
