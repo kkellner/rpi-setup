@@ -22,12 +22,12 @@ GPIO.setmode(GPIO.BCM)
 pixel_pin = board.D18
 ORDER = neopixel.GRBW
 num_pixels = 16
-pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=1.0, auto_write=True,
+pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=1.0, auto_write=False,
                            pixel_order=ORDER)
 
 
 pixels.fill((0, 0, 0, 0))
-#pixels.show()
+pixels.show()
 #time.sleep(1)
 
 
@@ -50,8 +50,18 @@ def handle(pin):
     if GPIO.input(PIR_PIN) and GPIO.input(MICROWAVE_PIN):
         logger.info("BOTH triggered!!") 
         pixels.fill((32, 0, 0, 0))
+        pixels.show()
+    elif GPIO.input(PIR_PIN):
+        pixels.fill((0, 0, 0, 0))
+        pixels[0] = (0, 32, 0, 0)
+        pixels.show()
+    elif GPIO.input(MICROWAVE_PIN):
+        pixels.fill((0, 0, 0, 0))
+        pixels[num_pixels-1] = (0, 0, 32, 0)
+        pixels.show()
     else:
         pixels.fill((0, 0, 0, 0))
+        pixels.show()
 
 
 GPIO.add_event_detect(PIR_PIN, GPIO.BOTH, handle)
@@ -66,4 +76,5 @@ try:
 except KeyboardInterrupt:
         logger.info("Exit")
         pixels.fill((0, 0, 0, 0))
+        pixels.show()
         GPIO.cleanup()
