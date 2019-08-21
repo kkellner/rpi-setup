@@ -72,7 +72,7 @@ sudo pip3 install pyyaml
 sudo pip3 install schedule
 sudo pip3 install melopero-vl53l1x
 sudo pip3 install psutil
-
+sudo pip3 install paho-mqtt
 
 # Add w1thermsensor command.
 # Command examples:
